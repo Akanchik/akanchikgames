@@ -1,48 +1,51 @@
-const gameListEl = document.getElementById('game-list');
-const gameInfoEl = document.getElementById('game-info');
-const backButton = document.getElementById('back-button');
-const titleEl = document.getElementById('game-title');
-const descEl = document.getElementById('game-description');
-const mediaEl = document.getElementById('game-media');
-const playButton = document.getElementById('play-button');
-
 let games = [];
 
 fetch('games.json')
   .then(res => res.json())
   .then(data => {
     games = data;
-    renderGameList();
+    const listEl = document.getElementById('game-list');
+    if (listEl) renderGameList(); // если мы на главной
+    else loadGamePage();          // если мы на странице игры
   });
 
+// 🔹 Функция для списка игр
 function renderGameList() {
-  gameListEl.innerHTML = '';
-  games.forEach(game => {
+  const listEl = document.getElementById('game-list');
+  listEl.innerHTML = '';
+  games.forEach((game, i) => {
     const card = document.createElement('div');
     card.className = 'game-card';
     card.innerHTML = `
       <img src="${game.image}" alt="${game.title}">
       <h3>${game.title}</h3>
     `;
-    card.onclick = () => showGameInfo(game);
-    gameListEl.appendChild(card);
+    card.onclick = () => {
+      window.location.href = `game.html?id=${i}`;
+    };
+    listEl.appendChild(card);
   });
 }
 
-function showGameInfo(game) {
-  gameListEl.classList.add('hidden');
-  gameInfoEl.classList.remove('hidden');
+// 🔹 Функция для страницы игры
+function loadGamePage() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (!id || !games[id]) {
+    document.body.innerHTML = '<p style="text-align:center;">Игра не найдена</p>';
+    return;
+  }
 
-  titleEl.textContent = game.title;
-  descEl.textContent = game.description;
+  const game = games[id];
+  document.title = game.title + ' — Akanchik Games';
 
-  mediaEl.innerHTML = '';
+  document.getElementById('game-title').textContent = game.title;
+  document.getElementById('game-description').textContent = game.description;
+  const mediaEl = document.getElementById('game-media');
 
   if (game.video) {
     const iframe = document.createElement('iframe');
-    iframe.src = game.video;
-    iframe.width = "560";
-    iframe.height = "315";
+    iframe.src = toEmbedUrl(game.video);
     iframe.allowFullscreen = true;
     mediaEl.appendChild(iframe);
   }
@@ -53,12 +56,20 @@ function showGameInfo(game) {
     mediaEl.appendChild(img);
   });
 
-  playButton.onclick = () => {
+  document.getElementById('play-button').onclick = () => {
     window.location.href = game.playLink;
   };
 }
 
-backButton.onclick = () => {
-  gameListEl.classList.remove('hidden');
-  gameInfoEl.classList.add('hidden');
-};
+// 🔹 Преобразуем YouTube-ссылки в embed
+function toEmbedUrl(url) {
+  try {
+    const u = new URL(url);
+    if (u.hostname === 'youtu.be') return `https://www.youtube.com/embed/${u.pathname.slice(1)}`;
+    if (u.hostname.includes('youtube.com')) {
+      const v = u.searchParams.get('v');
+      if (v) return `https://www.youtube.com/embed/${v}`;
+    }
+  } catch(e) {}
+  return url;
+}
