@@ -1,10 +1,10 @@
 [
   {
-    "title": "Sky Runner",
+    "title": "Paper Fire: Бумажный огонь",
     "description": "Беги по облакам и собирай кристаллы!",
-    "image": "images/skyrunner.jpg",
+    "image": "Images/paperfire.png",
     "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    "screenshots": ["images/skyrunner1.jpg", "images/skyrunner2.jpg"],
+    "screenshots": ["ima/skyrunner1.jpg", "images/skyrunner2.jpg"],
     "playLink": "https://example.com/skyrunner"
   },
   {
