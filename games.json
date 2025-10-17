@@ -1,11 +1,17 @@
 [
   {
-    "id": "game1",
-    "title": "Paper Fire: Бумажный огонь",
-    "image": "images/paperfire.png",
-    "description": "Не дайте костру сгореть, собирайтехворост в бумажном мире что-бы сохранить тепло!",
-    "screenshots": ["images/paper1.png", "images/paper2.png"],
-    "video": "https://www.youtube.com/embed/5DIbpfRkNtU?si=12FcXnJxYLWVYveq",
-    "playLink": "game1.html"
+    "title": "Sky Runner",
+    "description": "Беги по облакам и собирай кристаллы!",
+    "image": "images/skyrunner.jpg",
+    "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "screenshots": ["images/skyrunner1.jpg", "images/skyrunner2.jpg"],
+    "playLink": "https://example.com/skyrunner"
+  },
+  {
+    "title": "Zombie Clicker",
+    "description": "Кликай, выживай и строй базу.",
+    "image": "images/zombieclicker.jpg",
+    "screenshots": ["images/zombieclicker1.jpg"],
+    "playLink": "https://example.com/zombieclicker"
   }
 ]
