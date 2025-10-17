@@ -57,8 +57,14 @@ function loadGamePage() {
   });
 
   document.getElementById('play-button').onclick = () => {
-    window.location.href = game.playLink;
-  };
+  if (game.playFile) {
+    window.location.href = game.playFile; // локальный HTML-файл
+  } else if (game.playLink) {
+    window.open(game.playLink, '_blank'); // если всё-таки ссылка
+  } else {
+    alert('Файл игры не указан.');
+  }
+};
 }
 
 // 🔹 Преобразуем YouTube-ссылки в embed
