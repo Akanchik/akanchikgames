@@ -5,7 +5,7 @@
     "image": "Images/paperfire.png",
     "video": "https://youtu.be/5DIbpfRkNtU?si=LldoGWpnkVm2qSDC",
     "screenshots": ["ima/skyrunner1.jpg", "images/skyrunner2.jpg"],
-    "playLink": "https://example.com/skyrunner"
+    "playFile": "game1.html"
   },
   {
     "title": "Zombie Clicker",
