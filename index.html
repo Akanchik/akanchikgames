@@ -1,21 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <title>Платформа игр</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akanchik Games</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header><h1>🎮 Платформа игр</h1></header>
-  <main id="game-list"></main>
+  <header>
+    <img src="akanchik.png" alt="Akanchik Logo" class="logo">
+    <h1>Akanchik Games</h1>
+  </header>
 
-  <div id="game-info" class="hidden">
-    <button id="back-button">← Назад</button>
-    <h2 id="game-title"></h2>
-    <p id="game-description"></p>
-    <div id="game-media"></div>
-    <button id="play-button">Играть ▶</button>
-  </div>
+  <main>
+    <div id="game-list" class="game-list"></div>
+  </main>
 
   <script src="script.js"></script>
 </body>
