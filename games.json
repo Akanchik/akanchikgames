@@ -4,14 +4,7 @@
     "description": "Уникальная игра, сделанная на бумаге! Найдите дрова для огня, иначе вы останетесь без источника света и тепла... Маленький секрет, 4 огненные палочки в четырех направлениях! В правом верхнем углу, в верхнем левом углу, в левом нижнем углу и справа. а затем они генерируются случайным образом, также я хотел добавить других персонажей и функции ветра, но осталось мало времени, и я решил не делать этого, так что игра довольно простая и легкая.",
     "image": "Images/paperfire.png",
     "video": "https://youtu.be/5DIbpfRkNtU?si=LldoGWpnkVm2qSDC",
-    "screenshots": ["ima/skyrunner1.jpg", "images/skyrunner2.jpg"],
+    "screenshots": ["Images/paperfire1.png", "Images/paperfire2.jpg"],
     "playFile": "game1.html"
-  },
-  {
-    "title": "Zombie Clicker",
-    "description": "Кликай, выживай и строй базу.",
-    "image": "images/zombieclicker.jpg",
-    "screenshots": ["images/zombieclicker1.jpg"],
-    "playLink": "https://example.com/zombieclicker"
   }
 ]
