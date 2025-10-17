@@ -104,7 +104,7 @@ header {
 .play-btn {
   background: var(--accent);
   border: none;
-  color: white;
+  color: green;
   font-weight: 600;
   padding: 12px 24px;
   border-radius: 8px;
