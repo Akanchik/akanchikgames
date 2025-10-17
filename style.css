@@ -1,32 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --accent: #3b82f6;
+  --text: #f1f5f9;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
+  transition: all 0.3s ease;
+}
+
 body {
-  font-family: system-ui, sans-serif;
-  background: #111;
-  color: #fff;
+  background: var(--bg);
+  color: var(--text);
   margin: 0;
-  padding: 0;
-  text-align: center;
+  overflow-x: hidden;
 }
 
+/* === Шапка === */
 header {
-  background: #222;
-  padding: 10px;
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-#game-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
+.logo {
+  width: 100px;
+  animation: logoFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(59,130,246,0.6));
+}
+
+.logo:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* === Кнопка назад === */
+.back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  align-self: flex-start;
+  margin-bottom: -10px;
+  transition: 0.2s;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* === Список игр === */
+.game-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
+  padding: 30px;
 }
 
 .game-card {
-  background: #222;
-  border-radius: 10px;
-  width: 200px;
+  background: var(--card);
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
 .game-card:hover {
@@ -35,24 +86,60 @@ header {
 
 .game-card img {
   width: 100%;
-  height: 120px;
+  height: 150px;
   object-fit: cover;
 }
 
 .game-card h3 {
+  text-align: center;
   margin: 10px 0;
 }
 
-.hidden {
-  display: none;
-}
-
-#game-info {
+/* === Страница игры === */
+.game-info {
   padding: 20px;
+  animation: fadeIn 0.5s ease;
 }
 
-#game-media img {
-  width: 200px;
-  margin: 5px;
-  border-radius: 6px;
+.play-btn {
+  background: var(--accent);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+}
+
+.game-media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.game-media iframe {
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 640px;
+  height: 360px;
+}
+
+.game-media img {
+  max-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
 }
