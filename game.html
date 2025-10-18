@@ -8,16 +8,52 @@
 </head>
 <body>
   <header>
-    <a href="index.html" class="back-link">← Назад</a>
-    <a class="create-game">Опубликовать игру</a>
+    <a href="index.html" class="back-link">← На главную</a>
+    <button class="add-game-btn" onclick="window.open('https://forms.gle/ВАША_ССЫЛКА_НА_ФОРМУ', '_blank')">
+      ➕ Добавить игру
+    </button>
     <img src="akanchik.png" alt="Akanchik Logo" class="logo">
   </header>
 
   <main class="game-info">
-    <h2 id="game-title"></h2>
-    <p id="game-description"></p>
-    <div id="game-media" class="game-media"></div>
-    <button id="play-button" class="play-btn">▶ Играть</button>
+    <div class="game-header">
+      <h2 id="game-title"></h2>
+      <div class="game-meta">
+        <span class="game-rating">⭐ 4.5/5</span>
+        <span class="game-category">Приключение</span>
+      </div>
+    </div>
+    
+    <div class="game-content">
+      <div class="game-media-section">
+        <div id="game-media" class="game-media"></div>
+      </div>
+      
+      <div class="game-details">
+        <div class="description-card">
+          <h3>📖 Описание</h3>
+          <p id="game-description"></p>
+        </div>
+        
+        <div class="game-features">
+          <h3>🎮 Особенности</h3>
+          <ul>
+            <li>Увлекательный геймплей</li>
+            <li>Простое управление</li>
+            <li>Яркая графика</li>
+          </ul>
+        </div>
+        
+        <button id="play-button" class="play-btn">
+          🎮 Играть сейчас
+        </button>
+        
+        <div class="game-actions">
+          <button class="action-btn" onclick="shareGame()">📤 Поделиться</button>
+          <button class="action-btn" onclick="addToFavorites()">❤️ В избранное</button>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script src="script.js"></script>
