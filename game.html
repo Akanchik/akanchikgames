@@ -19,16 +19,30 @@
     <div class="game-header">
       <h2 id="game-title"></h2>
       <div class="game-meta">
-        <div class="game-rating">
-         <div class="game-category">
-         </div>
-        </div>
+        <span class="game-rating" id="game-rating"></span>
+        <span class="game-category" id="game-category"></span>
+        <span class="game-author" id="game-author"></span>
+      </div>
+      <div class="game-meta-secondary">
+        <span class="meta-item" id="game-release"></span>
+        <span class="meta-item" id="game-duration"></span>
+        <span class="meta-item" id="game-difficulty"></span>
       </div>
     </div>
     
     <div class="game-content">
       <div class="game-media-section">
         <div id="game-media" class="game-media"></div>
+        
+        <div class="game-info-card">
+          <h3>🏷️ Жанры</h3>
+          <div class="tags-container" id="game-genre"></div>
+        </div>
+        
+        <div class="game-info-card">
+          <h3>🔤 Языки</h3>
+          <div class="tags-container" id="game-language"></div>
+        </div>
       </div>
       
       <div class="game-details">
@@ -38,12 +52,18 @@
         </div>
         
         <div class="game-features">
-          <h3>🎮 Особенности</h3>
-          <ul>
-            <li>Увлекательный геймплей</li>
-            <li>Простое управление</li>
-            <li>Яркая графика</li>
-          </ul>
+          <h3>🎮 Особенности игры</h3>
+          <ul id="game-features-list"></ul>
+        </div>
+        
+        <div class="game-info-card">
+          <h3>🎯 Управление</h3>
+          <p id="game-controls" class="controls-info"></p>
+        </div>
+        
+        <div class="game-info-card">
+          <h3>🏷️ Теги</h3>
+          <div class="tags-container" id="game-tags"></div>
         </div>
         
         <button id="play-button" class="play-btn">
