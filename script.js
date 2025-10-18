@@ -6,9 +6,27 @@ fetch('games.json')
   .then(data => {
     games = data;
     const listEl = document.getElementById('game-list');
-    if (listEl) renderGameList(); // если мы на главной
-    else loadGamePage();          // если мы на странице игры
+    if (listEl) {
+      renderGameList(); // если мы на главной
+      updateGamesCounter(); // обновляем счетчик
+    } else {
+      loadGamePage(); // если мы на странице игры
+    }
   });
+
+// 🔹 Обновляем счетчик игр
+function updateGamesCounter() {
+  const counter = document.getElementById('games-count');
+  const emptyState = document.getElementById('empty-state');
+  
+  if (counter) {
+    counter.textContent = games.length;
+  }
+  
+  if (emptyState) {
+    emptyState.style.display = games.length === 0 ? 'flex' : 'none';
+  }
+}
 
 // 🔹 Функция для списка игр
 function renderGameList() {
@@ -26,9 +44,21 @@ function renderGameList() {
     const card = document.createElement('div');
     card.className = 'game-card';
     card.innerHTML = `
-      <img src="${game.image}" alt="${game.title}" loading="lazy">
-      <h3>${game.title}</h3>
-      <p class="game-preview">${game.description.substring(0, 100)}...</p>
+      <div class="card-image">
+        <img src="${game.image}" alt="${game.title}" loading="lazy">
+        <div class="card-badge">${game.category}</div>
+      </div>
+      <div class="card-content">
+        <h3>${game.title}</h3>
+        <div class="card-meta">
+          <span class="rating">⭐ ${game.rating}/5</span>
+          <span class="genre">${game.genre[0]}</span>
+        </div>
+        <p class="game-preview">${game.description.substring(0, 100)}...</p>
+        <div class="card-tags">
+          ${game.tags.slice(0, 2).map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+      </div>
     `;
     card.onclick = () => {
       window.location.href = `game.html?id=${i}`;
@@ -49,9 +79,37 @@ function loadGamePage() {
   const game = games[id];
   document.title = game.title + ' — Akanchik Games';
 
+  // Заполняем основную информацию
   document.getElementById('game-title').textContent = game.title;
   document.getElementById('game-description').textContent = game.description;
   
+  // Заполняем мета-информацию
+  document.getElementById('game-rating').textContent = `⭐ ${game.rating}/5`;
+  document.getElementById('game-category').textContent = game.category;
+  document.getElementById('game-author').textContent = `Разработчик: ${game.author}`;
+  document.getElementById('game-release').textContent = `Релиз: ${game.releaseDate}`;
+  document.getElementById('game-duration').textContent = `Время игры: ${game.duration}`;
+  document.getElementById('game-difficulty').textContent = `Сложность: ${game.difficulty}`;
+  
+  // Заполняем жанры
+  const genreEl = document.getElementById('game-genre');
+  genreEl.innerHTML = game.genre.map(g => `<span class="genre-tag">${g}</span>`).join('');
+  
+  // Заполняем теги
+  const tagsEl = document.getElementById('game-tags');
+  tagsEl.innerHTML = game.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+  
+  // Заполняем языки
+  const languageEl = document.getElementById('game-language');
+  languageEl.innerHTML = game.language.map(lang => `<span class="lang-tag">${lang}</span>`).join('');
+  
+  // Заполняем особенности
+  const featuresEl = document.getElementById('game-features-list');
+  featuresEl.innerHTML = game.features.map(feature => `<li>${feature}</li>`).join('');
+  
+  // Заполняем управление
+  document.getElementById('game-controls').textContent = game.controls;
+
   const mediaEl = document.getElementById('game-media');
   mediaEl.innerHTML = '';
 
@@ -87,13 +145,11 @@ function loadGamePage() {
     mediaEl.appendChild(gallery);
   }
 
-  // Кнопка игры - теперь используем универсальный embed
+  // Кнопка игры
   document.getElementById('play-button').onclick = () => {
     if (game.itchEmbedUrl) {
-      // Перенаправляем на универсальную страницу с embed
       window.location.href = `game-embed.html?id=${id}`;
     } else if (game.itchPageUrl) {
-      // Открываем страницу itch.io в новой вкладке
       window.open(game.itchPageUrl, '_blank');
     } else {
       alert('Ссылка на игру не указана.');
@@ -151,5 +207,16 @@ function shareGame() {
 }
 
 function addToFavorites() {
-  alert('Игра добавлена в избранное!');
+  const gameId = new URLSearchParams(window.location.search).get('id');
+  const game = games[gameId];
+  
+  // Сохраняем в localStorage
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  if (!favorites.includes(gameId)) {
+    favorites.push(gameId);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    alert(`"${game.title}" добавлена в избранное! ❤️`);
+  } else {
+    alert('Игра уже в избранном!');
+  }
 }
