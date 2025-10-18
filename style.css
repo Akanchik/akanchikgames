@@ -1,3 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap');
+
+:root {
+  --bg: #ffffff;
+  --card: #ffe599;
+  --accent: #f1c232;
+  --text: #000000;
+  --shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
+  transition: all 0.3s ease;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* === Шапка === */
+header {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 2px solid var(--accent);
+}
+
+.logo {
+  width: 200px;
+  animation: logoFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 218, 0, 0.8));
+}
+
+.logo:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* === Кнопки === */
+.add-game-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.add-game-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  align-self: flex-start;
+  margin-bottom: -10px;
+  transition: 0.2s;
+  font-size: 1.1em;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+  transform: translateX(-5px);
+}
+
+/* === Главная страница === */
+.hero-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #ffe599 0%, #f1c232 100%);
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.hero-section h2 {
+  font-size: 2.5em;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.hero-section p {
+  font-size: 1.2em;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.games-counter {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1em;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+/* === Список игр === */
+.game-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.game-card {
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.game-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.game-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.game-card h3 {
+  text-align: center;
+  margin: 15px 0 10px;
+  font-size: 1.3em;
+  color: #333;
+}
+
+.game-preview {
+  padding: 0 15px 15px;
+  text-align: center;
+  color: #666;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+/* === Страница игры === */
+.game-info {
+  padding: 20px;
+  animation: fadeIn 0.5s ease;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.game-header h2 {
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.game-meta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.game-rating, .game-category {
+  background: rgba(241, 194, 50, 0.2);
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.game-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .game-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Галерея скриншотов === */
+.screenshot-gallery {
+  margin: 20px 0;
+  position: relative;
+}
+
+.gallery-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
+}
+
+.gallery-viewport {
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+#current-screenshot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-nav {
+  background: rgba(241, 194, 50, 0.9);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.gallery-nav:hover {
+  background: var(--accent);
+  transform: scale(1.1);
+}
+
+.gallery-indicator {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+  color: #666;
+}
+
+/* === Видео контейнер === */
+.video-container {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 400px;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
+
+/* === Карточки информации === */
+.description-card, .game-features {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.description-card h3, .game-features h3 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 10px;
+}
+
+.game-features ul {
+  padding-left: 20px;
+}
+
+.game-features li {
+  margin-bottom: 8px;
+}
+
+/* === Кнопка игры === */
+.play-btn {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  font-size: 1.1em;
+  width: 100%;
+  margin: 20px 0;
+  transition: all 0.3s ease;
+}
+
+.play-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+}
+
+/* === Действия с игрой === */
+.game-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.action-btn {
+  flex: 1;
+  background: white;
+  border: 2px solid var(--accent);
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
 /* Добавьте эти стили в конец файла style.css */
 
 /* === Карточка на главной === */
