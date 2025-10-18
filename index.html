@@ -10,10 +10,30 @@
   <header>
     <img src="akanchik.png" alt="Akanchik Logo" class="logo">
     <h1>Akanchik Games</h1>
+    <button class="add-game-btn" onclick="window.open('https://forms.gle/ВАША_ССЫЛКА_НА_ФОРМУ', '_blank')">
+      ➕ Добавить игру
+    </button>
   </header>
 
   <main>
+    <div class="hero-section">
+      <h2>Добро пожаловать в мир игр!</h2>
+      <p>Откройте для себя увлекательные игры, созданные независимыми разработчиками</p>
+    </div>
+    
+    <div class="games-counter">
+      <span>Доступно игр: <strong id="games-count">0</strong></span>
+    </div>
+    
     <div id="game-list" class="game-list"></div>
+    
+    <div class="empty-state" id="empty-state" style="display: none;">
+      <h3>Пока нет игр</h3>
+      <p>Будьте первым, кто добавит свою игру!</p>
+      <button class="add-game-btn" onclick="window.open('https://forms.gle/ВАША_ССЫЛКА_НА_ФОРМУ', '_blank')">
+        ➕ Добавить игру
+      </button>
+    </div>
   </main>
 
   <script src="script.js"></script>
