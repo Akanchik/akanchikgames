@@ -5,6 +5,7 @@
     "image": "Images/paperfire.png",
     "video": "https://youtu.be/5DIbpfRkNtU?si=LldoGWpnkVm2qSDC",
     "screenshots": ["Images/paperfire1.jpeg", "Images/paperfire2.jpeg"],
-    "playFile": "game1.html"
+    "itchEmbedUrl": "https://itch.io/embed-upload/13498691?color=BDC3C7",
+    "itchPageUrl": "https://kiwisapce.itch.io/paper-fire"
   }
 ]
