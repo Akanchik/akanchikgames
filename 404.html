@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Страница не найдена — Akanchik Games</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .error-container {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .error-code {
+      font-size: 8em;
+      font-weight: 700;
+      color: #f1c232;
+      margin: 0;
+      text-shadow: 0 6px 20px rgba(241, 194, 50, 0.3);
+      animation: bounce 2s infinite;
+    }
+    
+    .error-title {
+      font-size: 2em;
+      margin: 20px 0;
+      color: #333;
+    }
+    
+    .error-description {
+      font-size: 1.1em;
+      color: #666;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    
+    .error-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #f1c232 0%, #e6b800 100%);
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(241, 194, 50, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(241, 194, 50, 0.4);
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #333;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      border: 2px solid #f1c232;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: #f1c232;
+      color: white;
+      transform: translateY(-3px);
+    }
+    
+    .error-illustration {
+      max-width: 300px;
+      margin: 0 auto 40px;
+      opacity: 0.8;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-20px);}
+      60% {transform: translateY(-10px);}
+    }
+    
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 6em;
+      }
+      
+      .error-title {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-link">← На главную</a>
+    <button class="add-game-btn" onclick="window.open('https://forms.gle/Ws5PiZebbpYAbHGg7', '_blank')">
+      ➕ Добавить игру
+    </button>
+    <img src="akanchik.png" alt="Akanchik Logo" class="logo">
+  </header>
+
+  <main>
+    <div class="error-container">
+      <div class="error-illustration">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="80" fill="#ffe599" opacity="0.5"/>
+          <circle cx="70" cy="80" r="15" fill="#f1c232"/>
+          <circle cx="130" cy="80" r="15" fill="#f1c232"/>
+          <path d="M60 130 Q100 160 140 130" stroke="#f1c232" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      
+      <h1 class="error-code">404</h1>
+      <h2 class="error-title">Упс! Страница не найдена</h2>
+      <p class="error-description">
+        К сожалению, запрашиваемая страница не существует. 
+        Возможно, она была перемещена или удалена.
+      </p>
+      
+      <div class="error-actions">
+        <a href="index.html" class="btn-primary">🎮 На главную</a>
+        <a href="javascript:history.back()" class="btn-secondary">↶ Назад</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Автоматический редирект на главную через 10 секунд
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 10000);
+  </script>
+</body>
+</html>
