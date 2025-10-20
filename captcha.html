@@ -164,20 +164,14 @@
                 this.runBotDetection();
             }
 
-            // 🔒 ЗАЩИТА ОТ БОТОВ
+            // 🔒 СМЯГЧЕННАЯ ЗАЩИТА ОТ БОТОВ
             runBotDetection() {
-                // 1. Honeypot проверка
+                // 1. Honeypot проверка (только для явных ботов)
                 this.setupHoneypot();
                 
-                // 2. Трекинг поведения
+                // 2. Трекинг поведения (только сбор данных)
                 this.trackMouseBehavior();
                 this.trackKeyboardBehavior();
-                
-                // 3. Проверка headless браузеров
-                this.detectHeadless();
-                
-                // 4. Защита от автозаполнения
-                this.preventAutofill();
             }
 
             setupHoneypot() {
@@ -186,8 +180,9 @@
                     const honeypot2 = document.getElementById('email').value;
                     const fakePassword = document.getElementById('password_fake').value;
                     
-                    if (honeypot1 || honeypot2 || fakePassword) {
-                        this.botScore += 50; // Бот заполнил скрытые поля
+                    // Только если все три поля заполнены - явный бот
+                    if (honeypot1 && honeypot2 && fakePassword) {
+                        this.botScore += 80;
                     }
                 }, 1000);
             }
@@ -200,14 +195,15 @@
                         time: Date.now()
                     });
                     
-                    // Слишком прямые движения = бот
-                    if (this.mouseMovements.length > 10) {
-                        const recentMoves = this.mouseMovements.slice(-10);
+                    // Очень мягкая проверка - только очевидные боты
+                    if (this.mouseMovements.length > 20) {
+                        const recentMoves = this.mouseMovements.slice(-20);
                         const straightness = this.calculateStraightness(recentMoves);
-                        if (straightness > 0.9) this.botScore += 10;
+                        // Только если движения идеально прямые
+                        if (straightness > 0.98) this.botScore += 30;
                     }
                     
-                    if (this.mouseMovements.length > 50) {
+                    if (this.mouseMovements.length > 100) {
                         this.mouseMovements.shift();
                     }
                 });
@@ -227,82 +223,54 @@
                         timeSinceLast: timeDiff
                     });
 
-                    // Слишком равномерная печать = бот
-                    if (this.keyStrokes.length > 5) {
-                        const recentKeys = this.keyStrokes.slice(-5);
+                    // Очень мягкая проверка равномерности
+                    if (this.keyStrokes.length > 10) {
+                        const recentKeys = this.keyStrokes.slice(-10);
                         const uniformity = this.calculateUniformity(recentKeys);
-                        if (uniformity > 0.8) this.botScore += 5;
+                        // Только если печать идеально равномерная
+                        if (uniformity > 0.95) this.botScore += 20;
                     }
 
-                    // Защита от Ctrl+V
+                    // Защита от Ctrl+V - но не блокируем, только отмечаем
                     if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
-                        setTimeout(() => {
-                            document.getElementById('userInput').value = '';
-                            this.botScore += 20;
-                        }, 100);
-                    }
-                });
-            }
-
-            detectHeadless() {
-                // Проверка WebGL
-                const canvas = document.createElement('canvas');
-                const gl = canvas.getContext('webgl');
-                if (!gl) this.botScore += 30;
-
-                // Проверка плагинов
-                if (navigator.plugins.length === 0) this.botScore += 20;
-
-                // Проверка userAgent
-                const ua = navigator.userAgent.toLowerCase();
-                if (ua.includes('headless') || ua.includes('phantom') || 
-                    ua.includes('puppeteer') || ua.includes('selenium')) {
-                    this.botScore += 25;
-                }
-
-                // Проверка разрешения (боты часто имеют маленькое разрешение)
-                if (screen.width < 100 || screen.height < 100) this.botScore += 15;
-            }
-
-            preventAutofill() {
-                document.getElementById('userInput').addEventListener('input', (e) => {
-                    // Если текст появился мгновенно - возможно автозаполнение
-                    if (e.target.value.length > 3 && this.keyStrokes.length < 2) {
-                        this.botScore += 15;
+                        this.botScore += 10;
                     }
                 });
             }
 
             calculateStraightness(movements) {
-                // Вычисляем "прямолинейность" движений
+                if (movements.length < 3) return 0;
+                
                 let totalDistance = 0;
-                let straightDistance = 0;
+                let straightDistance = Math.sqrt(
+                    Math.pow(movements[movements.length-1].x - movements[0].x, 2) +
+                    Math.pow(movements[movements.length-1].y - movements[0].y, 2)
+                );
                 
                 for (let i = 1; i < movements.length; i++) {
                     const dx = movements[i].x - movements[i-1].x;
                     const dy = movements[i].y - movements[i-1].y;
                     totalDistance += Math.sqrt(dx*dx + dy*dy);
-                    
-                    if (i === 1) {
-                        straightDistance = Math.sqrt(dx*dx + dy*dy);
-                    }
                 }
                 
-                return straightDistance / totalDistance;
+                return straightDistance / Math.max(totalDistance, 0.001);
             }
 
             calculateUniformity(keystrokes) {
-                // Вычисляем равномерность нажатий
-                const times = keystrokes.map(k => k.timeSinceLast);
+                const times = keystrokes.map(k => k.timeSinceLast).filter(t => t > 0);
+                if (times.length < 3) return 0;
+                
                 const avg = times.reduce((a, b) => a + b) / times.length;
                 const variance = times.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / times.length;
-                return 1 - (variance / avg); // Ближе к 1 = более равномерно
+                return 1 - Math.min(variance / avg, 1);
             }
 
             isHuman() {
-                return this.botScore < 60 && 
-                       this.mouseMovements.length > 5 && 
-                       this.keyStrokes.length > 2;
+                // СМЯГЧЕННЫЕ УСЛОВИЯ:
+                // - Боты должны набрать > 80 баллов
+                // - Учитываем что пользователь может не двигать мышью
+                // - Учитываем что пользователь может печатать быстро
+                return this.botScore < 80;
             }
 
             // 📋 ОСНОВНЫЕ МЕТОДЫ
@@ -311,22 +279,23 @@
                 this.currentCaptcha = this.captchaData[randomIndex];
                 document.getElementById('currentCaptchaImage').src = this.currentCaptcha.image;
                 document.getElementById('userInput').value = '';
+                
+                // Сбрасываем счетчик при каждой новой капче
+                this.botScore = Math.max(0, this.botScore - 20);
             }
 
             verifyCaptcha() {
-                // Проверяем honeypot поля
-                this.setupHoneypot();
-
-                if (!this.isHuman()) {
-                    this.showMessage('Обнаружена автоматизация', 'error');
-                    this.loadRandomCaptcha();
-                    return;
-                }
-
                 const userInput = document.getElementById('userInput').value.trim();
                 
                 if (!userInput) {
                     this.showMessage('Введите текст', 'error');
+                    return;
+                }
+
+                // СМЯГЧЕННАЯ ПРОВЕРКА: только явные боты
+                if (this.botScore > 80) {
+                    this.showMessage('Обнаружена автоматизация', 'error');
+                    this.loadRandomCaptcha();
                     return;
                 }
 
@@ -337,11 +306,10 @@
                     this.showMessage('Верно', 'success');
                     setTimeout(() => {
                         this.loadRandomCaptcha();
-                        this.botScore = Math.max(0, this.botScore - 10); // Снижаем счетчик
                     }, 1000);
                 } else {
                     this.showMessage('Неверно', 'error');
-                    this.botScore += 5; // Увеличиваем при ошибке
+                    // Не увеличиваем счетчик за ошибки пользователя
                 }
             }
 
