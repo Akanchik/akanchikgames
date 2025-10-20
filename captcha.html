@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Капча</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .captcha-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .captcha-image {
+            background: #1a1a1a;
+            padding: 20px;
+            margin: 0 0 20px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .captcha-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            display: block;
+            margin: 0 auto;
+            animation: shake 0.1s ease-in-out infinite;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 0 0 15px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error {
+            color: #dc3545;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8d7da;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            color: #155724;
+            margin: 10px 0;
+            padding: 10px;
+            background: #d4edda;
+            border-radius: 5px;
+            border: 1px solid #c3e6cb;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-1px); }
+            50% { transform: translateY(1px); }
+            75% { transform: translateX(1px); }
+        }
+
+        .honeypot {
+            opacity: 0;
+            position: absolute;
+            left: -9999px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Скрытые поля-ловушки -->
+    <input type="text" id="website" name="website" class="honeypot" tabindex="-1" autocomplete="off">
+    <input type="email" id="email" name="email" class="honeypot" tabindex="-1" autocomplete="off">
+    <input type="password" id="password_fake" name="password_fake" class="honeypot" autocomplete="new-password">
+    
+    <div class="captcha-container">
+        <!-- Основная капча -->
+        <div id="captchaStep1">
+            <div class="captcha-image">
+                <img id="currentCaptchaImage" src="" alt="Капча">
+            </div>
+            
+            <input type="text" 
+                   id="userInput" 
+                   class="text-input" 
+                   placeholder="Введите текст" 
+                   maxlength="20" 
+                   autocomplete="off">
+            
+            <button class="btn" onclick="verifyCaptcha()">Проверить</button>
+        </div>
+
+        <!-- Результат -->
+        <div id="result" class="hidden"></div>
+    </div>
+
+    <script>
+        class SimpleCaptcha {
+            constructor() {
+                this.captchaData = [
+                    { image: 'Images/captcha/C1.png', answer: 'AKA4L' },
+                    { image: 'Images/captcha/C2.png', answer: 'KJX7I' },
+                    { image: 'Images/captcha/C3.png', answer: 'NBS8A' },
+                    { image: 'Images/captcha/C4.png', answer: 'UIF5U' },
+                    { image: 'Images/captcha/C5.png', answer: 'GHR23' }
+                ];
+                
+                this.currentCaptcha = null;
+                this.botScore = 0;
+                this.mouseMovements = [];
+                this.keyStrokes = [];
+                this.init();
+            }
+
+            init() {
+                this.loadRandomCaptcha();
+                this.runBotDetection();
+            }
+
+            // 🔒 ЗАЩИТА ОТ БОТОВ
+            runBotDetection() {
+                // 1. Honeypot проверка
+                this.setupHoneypot();
+                
+                // 2. Трекинг поведения
+                this.trackMouseBehavior();
+                this.trackKeyboardBehavior();
+                
+                // 3. Проверка headless браузеров
+                this.detectHeadless();
+                
+                // 4. Защита от автозаполнения
+                this.preventAutofill();
+            }
+
+            setupHoneypot() {
+                setInterval(() => {
+                    const honeypot1 = document.getElementById('website').value;
+                    const honeypot2 = document.getElementById('email').value;
+                    const fakePassword = document.getElementById('password_fake').value;
+                    
+                    if (honeypot1 || honeypot2 || fakePassword) {
+                        this.botScore += 50; // Бот заполнил скрытые поля
+                    }
+                }, 1000);
+            }
+
+            trackMouseBehavior() {
+                document.addEventListener('mousemove', (e) => {
+                    this.mouseMovements.push({
+                        x: e.clientX,
+                        y: e.clientY,
+                        time: Date.now()
+                    });
+                    
+                    // Слишком прямые движения = бот
+                    if (this.mouseMovements.length > 10) {
+                        const recentMoves = this.mouseMovements.slice(-10);
+                        const straightness = this.calculateStraightness(recentMoves);
+                        if (straightness > 0.9) this.botScore += 10;
+                    }
+                    
+                    if (this.mouseMovements.length > 50) {
+                        this.mouseMovements.shift();
+                    }
+                });
+            }
+
+            trackKeyboardBehavior() {
+                let lastKeyTime = Date.now();
+                
+                document.addEventListener('keydown', (e) => {
+                    const now = Date.now();
+                    const timeDiff = now - lastKeyTime;
+                    lastKeyTime = now;
+
+                    this.keyStrokes.push({
+                        key: e.key,
+                        time: now,
+                        timeSinceLast: timeDiff
+                    });
+
+                    // Слишком равномерная печать = бот
+                    if (this.keyStrokes.length > 5) {
+                        const recentKeys = this.keyStrokes.slice(-5);
+                        const uniformity = this.calculateUniformity(recentKeys);
+                        if (uniformity > 0.8) this.botScore += 5;
+                    }
+
+                    // Защита от Ctrl+V
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
+                        setTimeout(() => {
+                            document.getElementById('userInput').value = '';
+                            this.botScore += 20;
+                        }, 100);
+                    }
+                });
+            }
+
+            detectHeadless() {
+                // Проверка WebGL
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl');
+                if (!gl) this.botScore += 30;
+
+                // Проверка плагинов
+                if (navigator.plugins.length === 0) this.botScore += 20;
+
+                // Проверка userAgent
+                const ua = navigator.userAgent.toLowerCase();
+                if (ua.includes('headless') || ua.includes('phantom') || 
+                    ua.includes('puppeteer') || ua.includes('selenium')) {
+                    this.botScore += 25;
+                }
+
+                // Проверка разрешения (боты часто имеют маленькое разрешение)
+                if (screen.width < 100 || screen.height < 100) this.botScore += 15;
+            }
+
+            preventAutofill() {
+                document.getElementById('userInput').addEventListener('input', (e) => {
+                    // Если текст появился мгновенно - возможно автозаполнение
+                    if (e.target.value.length > 3 && this.keyStrokes.length < 2) {
+                        this.botScore += 15;
+                    }
+                });
+            }
+
+            calculateStraightness(movements) {
+                // Вычисляем "прямолинейность" движений
+                let totalDistance = 0;
+                let straightDistance = 0;
+                
+                for (let i = 1; i < movements.length; i++) {
+                    const dx = movements[i].x - movements[i-1].x;
+                    const dy = movements[i].y - movements[i-1].y;
+                    totalDistance += Math.sqrt(dx*dx + dy*dy);
+                    
+                    if (i === 1) {
+                        straightDistance = Math.sqrt(dx*dx + dy*dy);
+                    }
+                }
+                
+                return straightDistance / totalDistance;
+            }
+
+            calculateUniformity(keystrokes) {
+                // Вычисляем равномерность нажатий
+                const times = keystrokes.map(k => k.timeSinceLast);
+                const avg = times.reduce((a, b) => a + b) / times.length;
+                const variance = times.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / times.length;
+                return 1 - (variance / avg); // Ближе к 1 = более равномерно
+            }
+
+            isHuman() {
+                return this.botScore < 60 && 
+                       this.mouseMovements.length > 5 && 
+                       this.keyStrokes.length > 2;
+            }
+
+            // 📋 ОСНОВНЫЕ МЕТОДЫ
+            loadRandomCaptcha() {
+                const randomIndex = Math.floor(Math.random() * this.captchaData.length);
+                this.currentCaptcha = this.captchaData[randomIndex];
+                document.getElementById('currentCaptchaImage').src = this.currentCaptcha.image;
+                document.getElementById('userInput').value = '';
+            }
+
+            verifyCaptcha() {
+                // Проверяем honeypot поля
+                this.setupHoneypot();
+
+                if (!this.isHuman()) {
+                    this.showMessage('Обнаружена автоматизация', 'error');
+                    this.loadRandomCaptcha();
+                    return;
+                }
+
+                const userInput = document.getElementById('userInput').value.trim();
+                
+                if (!userInput) {
+                    this.showMessage('Введите текст', 'error');
+                    return;
+                }
+
+                const cleanInput = userInput.toUpperCase().replace(/\s+/g, '');
+                const cleanAnswer = this.currentCaptcha.answer.toUpperCase().replace(/\s+/g, '');
+
+                if (cleanInput === cleanAnswer) {
+                    this.showMessage('Верно', 'success');
+                    setTimeout(() => {
+                        this.loadRandomCaptcha();
+                        this.botScore = Math.max(0, this.botScore - 10); // Снижаем счетчик
+                    }, 1000);
+                } else {
+                    this.showMessage('Неверно', 'error');
+                    this.botScore += 5; // Увеличиваем при ошибке
+                }
+            }
+
+            showMessage(message, type) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.className = type === 'error' ? 'error' : 'success';
+                resultDiv.innerHTML = message;
+                resultDiv.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    resultDiv.classList.add('hidden');
+                }, 2000);
+            }
+        }
+
+        // Инициализация
+        let captchaSystem;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            captchaSystem = new SimpleCaptcha();
+        });
+
+        function verifyCaptcha() {
+            captchaSystem.verifyCaptcha();
+        }
+
+        // Поддержка Enter
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyCaptcha();
+            }
+        });
+    </script>
+</body>
+</html>
