@@ -7,110 +7,156 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <a href="index.html" class="back-link">← На главную</a>
-    <img src="akanchik.png" alt="Akanchik Games" class="logo">
-    <!-- Кнопка добавления игры скрыта на мобильных, но показывается на десктопе -->
-    <button class="add-game-btn desktop-only" onclick="window.open('https://forms.gle/Ws5PiZebbpYAbHGg7', '_blank')">
-      <span>➕</span> Добавить игру
-    </button>
+  <!-- Roblox Header -->
+  <header class="roblox-header">
+    <div class="header-left">
+      <div class="roblox-logo">
+        <img src="akanchik.png" alt="Akanchik Games">
+        <span class="logo-text">AKANCHIK</span>
+      </div>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item">← На главную</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="roblox-avatar">
+        <span>👤</span>
+      </div>
+    </div>
   </header>
 
-  <main class="game-info">
-    <div class="game-header">
-      <div class="game-title-section">
-        <h2 id="game-title">Загрузка...</h2>
-        <button id="play-button" class="play-btn">
-          <span>🎮</span> Играть
+  <main class="roblox-game-page">
+    <!-- Game Banner -->
+    <div class="roblox-game-banner">
+      <div class="roblox-game-header">
+        <div class="roblox-game-title">
+          <h1 id="game-title">Загрузка...</h1>
+          <div class="roblox-game-meta">
+            <span class="roblox-meta-item" id="game-author">👤 Разработчик</span>
+            <span class="roblox-meta-item" id="game-category">📁 Категория</span>
+            <span class="roblox-meta-item" id="game-release">📅 Релиз</span>
+          </div>
+        </div>
+        <button id="play-button" class="roblox-play-btn">
+          <span>▶</span> ИГРАТЬ
         </button>
-      </div>
-      
-      <div class="game-meta">
-        <span class="game-rating" id="game-rating">⭐ ?/5</span>
-        <span class="game-author" id="game-author">👘 Автор</span>
-        <span class="game-category" id="game-category">Категория</span>
-      </div>
-      
-      <div class="game-meta-secondary">
-        <span class="meta-item" id="game-release">📅 Релиз</span>
-        <span class="meta-item" id="game-duration">⏱️ Время</span>
-        <span class="meta-item" id="game-difficulty">📊 Сложность</span>
       </div>
     </div>
     
-    <div class="game-content">
+    <!-- Content Grid -->
+    <div class="roblox-content-grid">
       <!-- Левая колонка - Медиа -->
-      <div class="game-media-section">
-        <div id="game-media" class="game-media">
-          <!-- Здесь будет видео или галерея -->
-          <div class="video-container" style="display: flex; align-items: center; justify-content: center; background: #f1f5f9;">
-            <p style="color: #64748b;">Загрузка медиа...</p>
+      <div class="roblox-media-section">
+        <!-- Видео плеер -->
+        <div class="roblox-media-player" id="game-media">
+          <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white;">
+            Загрузка медиа...
           </div>
         </div>
         
-        <div class="quick-actions">
-          <button class="action-btn" onclick="shareGame()">
+        <!-- Галерея скриншотов -->
+        <div class="roblox-gallery" id="screenshot-gallery"></div>
+        
+        <!-- Кнопки действий -->
+        <div class="roblox-action-buttons">
+          <button class="roblox-action-btn" onclick="shareGame()">
             <span>📤</span> Поделиться
           </button>
-          <button class="action-btn" onclick="addToFavorites()">
+          <button class="roblox-action-btn" onclick="addToFavorites()">
             <span>❤️</span> В избранное
           </button>
         </div>
         
-        <div class="info-grid">
-          <div class="game-info-card compact">
-            <h3>🏷️ Жанры</h3>
-            <div class="tags-container" id="game-genre">
-              <span class="genre-tag">Загрузка...</span>
-            </div>
-          </div>
-          
-          <div class="game-info-card compact">
-            <h3>🔤 Языки</h3>
-            <div class="tags-container" id="game-language">
-              <span class="lang-tag">Загрузка...</span>
-            </div>
-          </div>
+        <!-- Жанры и языки -->
+        <div class="roblox-info-panel">
+          <h3 class="roblox-panel-title">🏷️ Жанры</h3>
+          <div class="roblox-tags-cloud" id="game-genre"></div>
+        </div>
+        
+        <div class="roblox-info-panel">
+          <h3 class="roblox-panel-title">🔤 Языки</h3>
+          <div class="roblox-tags-cloud" id="game-language"></div>
         </div>
       </div>
       
       <!-- Правая колонка - Детали -->
-      <div class="game-details">
-        <div class="description-card">
-          <h3>📖 Описание</h3>
-          <p id="game-description">Загрузка описания игры...</p>
+      <div class="roblox-details-section">
+        <!-- Описание -->
+        <div class="roblox-info-panel">
+          <h3 class="roblox-panel-title">📖 Описание</h3>
+          <p id="game-description" style="color: var(--text-light); line-height: 1.7;">Загрузка...</p>
         </div>
         
-        <div class="game-features">
-          <h3>🎮 Особенности</h3>
-          <ul id="game-features-list">
-            <li>Загрузка особенностей...</li>
+        <!-- Особенности -->
+        <div class="roblox-info-panel">
+          <h3 class="roblox-panel-title">⚡ Особенности</h3>
+          <ul class="roblox-features-list" id="game-features-list">
+            <li>Загрузка...</li>
           </ul>
         </div>
         
-        <div class="game-info-card">
-          <h3>🎯 Управление</h3>
-          <p id="game-controls" class="controls-info">Загрузка управления...</p>
+        <!-- Управление -->
+        <div class="roblox-info-panel">
+          <h3 class="roblox-panel-title">🎮 Управление</h3>
+          <div class="roblox-tags-cloud">
+            <span class="roblox-tag-blue" id="game-controls">Загрузка...</span>
+          </div>
         </div>
         
-        <div class="game-info-card">
-          <h3>🏷️ Теги</h3>
-          <div class="tags-container" id="game-tags">
-            <span class="tag">Загрузка...</span>
+        <!-- Теги -->
+        <div class="roblox-info-panel">
+          <h3 class="roblox-panel-title">🏷️ Теги</h3>
+          <div class="roblox-tags-cloud" id="game-tags"></div>
+        </div>
+        
+        <!-- Доп. информация -->
+        <div class="roblox-info-panel">
+          <h3 class="roblox-panel-title">📊 Информация</h3>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div><span class="roblox-tag-blue">⭐ Рейтинг:</span> <strong id="game-rating">?/5</strong></div>
+            <div><span class="roblox-tag-blue">⏱️ Время:</span> <strong id="game-duration">Не указано</strong></div>
+            <div><span class="roblox-tag-blue">📊 Сложность:</span> <strong id="game-difficulty">Не указана</strong></div>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Футер с кнопкой добавить игру (показывается только на мобильных) -->
-  <footer class="site-footer mobile-only">
+  <!-- Roblox Footer -->
+  <footer class="roblox-footer">
     <div class="footer-content">
+      <div class="footer-section">
+        <h4>Akanchik Games</h4>
+        <ul>
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Правила</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Игры</h4>
+        <ul>
+          <li><a href="#">Популярное</a></li>
+          <li><a href="#">Новинки</a></li>
+          <li><a href="#">Скоро</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Сообщество</h4>
+        <ul>
+          <li><a href="#">Форум</a></li>
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">Telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
       <button class="footer-add-game" onclick="window.open('https://forms.gle/Ws5PiZebbpYAbHGg7', '_blank')">
         ➕ Добавить игру
       </button>
       <div class="copyright">
-        Akanchik Games © 2026
+        Akanchik Games © 2026 | Все права защищены
       </div>
     </div>
   </footer>
