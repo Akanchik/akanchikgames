@@ -1,21 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #f5f5f5;
+  --bg: #ffffff;
   --surface: #ffffff;
   --card: #ffffff;
-  --roblox-blue: #00A2FF;
-  --roblox-blue-dark: #0077CC;
-  --roblox-green: #00C851;
-  --roblox-red: #FF4444;
-  --roblox-orange: #FFA500;
-  --roblox-gray: #E1E1E1;
-  --roblox-dark: #1A1A1A;
-  --text: #2c3e50;
-  --text-light: #7f8c8d;
-  --border: #e0e0e0;
-  --shadow: 0 4px 12px rgba(0, 162, 255, 0.1);
-  --shadow-hover: 0 8px 24px rgba(0, 162, 255, 0.2);
+  --accent: #2563eb;
+  --accent-light: #3b82f6;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 10px 25px -5px rgba(0,0,0,0.05);
+  --shadow-hover: 0 20px 30px -10px rgba(0,0,0,0.1);
   --radius: 16px;
   --radius-sm: 12px;
 }
@@ -34,207 +29,127 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* === Roblox Header === */
-.roblox-header {
-  background: linear-gradient(135deg, #00A2FF, #0077CC);
-  padding: 12px 32px;
+/* === Шапка === */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(0, 162, 255, 0.3);
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.95);
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.roblox-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.roblox-logo img {
+.logo {
   height: 40px;
   width: auto;
-  filter: brightness(0) invert(1);
+  transition: opacity 0.2s;
+  border-radius: 8px;
+  background: white;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.logo-text {
+.logo:hover {
+  opacity: 0.8;
+}
+
+/* === Кнопки === */
+.add-game-btn {
+  background: var(--accent);
   color: white;
-  font-weight: 800;
-  font-size: 24px;
-  letter-spacing: -0.5px;
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
-}
-
-.header-nav {
-  display: flex;
-  gap: 4px;
-}
-
-.nav-item {
-  color: rgba(255,255,255,0.9);
-  text-decoration: none;
+  border: none;
   padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 40px;
   font-weight: 500;
   font-size: 14px;
+  cursor: pointer;
   transition: all 0.2s;
-}
-
-.nav-item:hover,
-.nav-item.active {
-  background: rgba(255,255,255,0.2);
-  color: white;
-}
-
-.header-right {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 16px;
+  gap: 6px;
 }
 
-.roblox-badge {
-  background: rgba(255,255,255,0.2);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
+.add-game-btn:hover {
+  background: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+.back-link {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.roblox-avatar {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #FFD700, #FFA500);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-  border: 2px solid white;
-  cursor: pointer;
+.back-link:hover {
+  color: var(--accent);
 }
 
-/* === Roblox Hero === */
-.roblox-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 60px 32px;
+/* === Скрытие элементов === */
+.desktop-only {
+  display: inline-flex;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* === Герой-секция === */
+.hero-section {
   text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.roblox-hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><rect x="20" y="20" width="60" height="60" fill="none" stroke="white" stroke-width="2"/><circle cx="50" cy="50" r="15" fill="none" stroke="white" stroke-width="2"/></svg>');
-  background-size: 50px;
-  animation: moveGrid 20s linear infinite;
-}
-
-@keyframes moveGrid {
-  from { transform: translate(0, 0); }
-  to { transform: translate(50px, 50px); }
-}
-
-.roblox-hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 800px;
+  padding: 60px 20px 40px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
-.roblox-hero h2 {
-  font-size: 3.5em;
-  font-weight: 800;
-  color: white;
-  margin-bottom: 16px;
-  text-shadow: 4px 4px 0 rgba(0,0,0,0.1);
-  letter-spacing: -1px;
-}
-
-.roblox-hero p {
-  font-size: 1.3em;
-  color: rgba(255,255,255,0.9);
-  margin-bottom: 32px;
-}
-
-.roblox-stats {
-  display: flex;
-  gap: 32px;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-number {
-  display: block;
+.hero-section h2 {
   font-size: 2.5em;
-  font-weight: 800;
-  color: white;
-  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 16px;
 }
 
-.stat-label {
-  color: rgba(255,255,255,0.8);
-  font-size: 14px;
-  font-weight: 500;
+.hero-section p {
+  font-size: 1.2em;
+  color: var(--text-light);
 }
 
-/* === Roblox Search === */
-.roblox-search-section {
+/* === Поиск и фильтры === */
+.search-section {
   max-width: 1200px;
-  margin: -30px auto 40px;
+  margin: 0 auto 32px;
   padding: 0 32px;
-  position: relative;
-  z-index: 10;
 }
 
-.roblox-search-container {
-  background: white;
-  border-radius: 60px;
-  padding: 8px;
+.search-container {
   display: flex;
-  gap: 12px;
-  box-shadow: 0 10px 30px rgba(0, 162, 255, 0.2);
-  border: 2px solid var(--roblox-blue);
-}
-
-.roblox-search-icon {
-  background: var(--roblox-blue);
-  color: white;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
+  gap: 16px;
   align-items: center;
-  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 60px;
+  padding: 4px 4px 4px 20px;
+  box-shadow: var(--shadow);
+}
+
+.search-icon {
+  color: var(--text-light);
   font-size: 20px;
 }
 
-.roblox-search-input {
+.search-input {
   flex: 1;
   border: none;
-  padding: 12px 0;
+  padding: 14px 0;
   font-size: 16px;
   background: transparent;
   outline: none;
@@ -242,17 +157,36 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-.roblox-search-input::placeholder {
-  color: #999;
+.search-input::placeholder {
+  color: var(--text-light);
+  opacity: 0.7;
 }
 
-.roblox-filter-btn {
-  background: var(--roblox-blue);
+.search-clear {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 18px;
+  display: none;
+}
+
+.search-clear.visible {
+  display: block;
+}
+
+.search-clear:hover {
+  color: var(--text);
+}
+
+.filter-btn {
+  background: var(--accent);
   color: white;
   border: none;
-  padding: 12px 28px;
+  padding: 12px 24px;
   border-radius: 40px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   cursor: pointer;
   display: flex;
@@ -261,15 +195,14 @@ body {
   white-space: nowrap;
 }
 
-.roblox-filter-btn:hover {
-  background: var(--roblox-blue-dark);
-  transform: scale(1.02);
+.filter-btn:hover {
+  background: var(--accent-light);
 }
 
-/* === Фильтры === */
+/* Фильтры */
 .filters-panel {
-  background: white;
-  border: 2px solid var(--roblox-blue);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
   margin-top: 16px;
@@ -277,7 +210,6 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 24px;
   animation: slideDown 0.3s ease;
-  box-shadow: var(--shadow-hover);
 }
 
 .filters-panel.visible {
@@ -309,7 +241,7 @@ body {
 .filter-options input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: var(--roblox-blue);
+  accent-color: var(--accent);
 }
 
 .filter-actions {
@@ -331,13 +263,13 @@ body {
 }
 
 .apply-filters {
-  background: var(--roblox-blue);
+  background: var(--accent);
   color: white;
   border: none;
 }
 
 .apply-filters:hover {
-  background: var(--roblox-blue-dark);
+  background: var(--accent-light);
 }
 
 .reset-filters {
@@ -347,308 +279,586 @@ body {
 }
 
 .reset-filters:hover {
-  border-color: var(--roblox-blue);
-  color: var(--roblox-blue);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-/* === Roblox Game Grid === */
-.roblox-game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-  padding: 0 32px 48px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.roblox-game-card {
-  background: white;
-  border-radius: var(--radius);
-  overflow: hidden;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.2s;
-  box-shadow: var(--shadow);
-}
-
-.roblox-game-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: var(--roblox-blue);
-  box-shadow: var(--shadow-hover);
-}
-
-.roblox-card-image {
-  position: relative;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-}
-
-.roblox-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.roblox-card-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: var(--roblox-blue);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.roblox-card-stats {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background: rgba(0,0,0,0.8);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  backdrop-filter: blur(4px);
-}
-
-.roblox-card-content {
-  padding: 20px;
-}
-
-.roblox-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.roblox-card-header h3 {
-  font-size: 1.2em;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.roblox-rating {
-  background: #FFD700;
-  color: #2c3e50;
-  padding: 4px 8px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.roblox-card-meta {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-}
-
-.roblox-genre {
-  background: var(--roblox-gray);
-  color: var(--text);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 500;
-}
-
-.roblox-players {
-  color: var(--roblox-green);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.roblox-card-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.roblox-tag {
-  background: #f0f0f0;
+/* Результаты поиска */
+.search-stats {
+  font-size: 14px;
   color: var(--text-light);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 500;
+  margin-top: 12px;
+  padding: 0 32px;
 }
 
-/* === No Results / Error === */
 .no-results {
   text-align: center;
   padding: 60px 20px;
   color: var(--text-light);
   grid-column: 1 / -1;
-  background: white;
-  border-radius: var(--radius);
-  border: 2px solid var(--roblox-red);
-  margin: 20px;
 }
 
 .no-results h3 {
-  font-size: 1.8em;
-  margin-bottom: 12px;
-  color: var(--roblox-red);
-}
-
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--text-light);
-}
-
-.empty-state h3 {
   font-size: 1.5em;
   margin-bottom: 12px;
   color: var(--text);
 }
 
-/* === Roblox Footer === */
-.roblox-footer {
-  background: var(--roblox-dark);
-  color: white;
-  padding: 40px 32px 20px;
+/* === Счетчик игр === */
+.games-counter {
+  text-align: center;
+  padding: 0 20px 40px;
+  font-size: 15px;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+/* === Список игр === */
+.game-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 0 32px 64px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.game-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-light);
+}
+
+.card-image {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.game-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255,255,255,0.95);
+  color: var(--text);
+  padding: 4px 10px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-content h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.rating {
+  color: #f59e0b;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.genre {
+  background: #f1f5f9;
+  color: var(--text-light);
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.game-preview {
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.card-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #f1f5f9;
+  color: var(--text-light);
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* === Футер === */
+.site-footer {
   margin-top: 60px;
+  padding: 24px 32px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  background: white;
 }
 
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
-}
-
-.footer-section h4 {
-  color: var(--roblox-blue);
-  margin-bottom: 20px;
-  font-size: 18px;
-}
-
-.footer-section ul {
-  list-style: none;
-}
-
-.footer-section ul li {
-  margin-bottom: 12px;
-}
-
-.footer-section ul li a {
-  color: #999;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-section ul li a:hover {
-  color: var(--roblox-blue);
-}
-
-.footer-bottom {
-  max-width: 1200px;
-  margin: 40px auto 0;
-  padding-top: 20px;
-  border-top: 1px solid #333;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 16px;
 }
 
 .footer-add-game {
-  background: var(--roblox-blue);
-  color: white;
+  background: none;
   border: none;
-  padding: 12px 24px;
-  border-radius: 40px;
-  font-weight: 600;
+  color: var(--text-light);
+  font-size: 14px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+  transition: color 0.2s;
+  padding: 4px 8px;
 }
 
 .footer-add-game:hover {
-  background: var(--roblox-blue-dark);
-  transform: translateY(-2px);
+  color: var(--accent);
 }
 
 .copyright {
-  color: #666;
-  font-size: 14px;
+  color: var(--text-light);
+  font-size: 13px;
+  letter-spacing: 0.3px;
 }
 
-/* === Mobile Optimization === */
+/* === Стили для game.html === */
+.game-info {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+
+.game-header {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.game-title-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.game-title-section h2 {
+  font-size: 2.2em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0;
+}
+
+.game-title-section .play-btn {
+  width: auto;
+  padding: 12px 32px;
+  margin: 0;
+  font-size: 16px;
+  background: var(--accent);
+  border: none;
+  border-radius: 40px;
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.game-title-section .play-btn:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.game-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.game-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: var(--text-light);
+}
+
+.game-meta .game-rating {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.game-meta-secondary {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  font-size: 14px;
+  color: var(--text-light);
+  background: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: 40px;
+}
+
+/* === Медиа секция === */
+.game-media-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.game-media {
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.video-container {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* === Галерея === */
+.screenshot-gallery {
+  margin: 0;
+}
+
+.gallery-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.gallery-viewport {
+  flex: 1;
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+#current-screenshot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-nav {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.gallery-nav:hover {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.gallery-indicator {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* === Быстрые действия === */
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.quick-actions .action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  font-size: 14px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  transition: all 0.2s;
+  cursor: pointer;
+  color: var(--text-light);
+}
+
+.quick-actions .action-btn:hover {
+  background: #f8fafc;
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* === Информационные карточки === */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.game-info-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  border: 1px solid var(--border);
+}
+
+.game-info-card.compact {
+  padding: 16px;
+}
+
+.game-info-card h3 {
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.description-card,
+.game-features {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid var(--border);
+}
+
+.description-card h3,
+.game-features h3 {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#game-description {
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+.game-features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.game-features li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-features li:last-child {
+  border-bottom: none;
+}
+
+.game-features li::before {
+  content: "•";
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.controls-info {
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  font-family: 'Inter', monospace;
+  font-size: 14px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  white-space: pre-wrap;
+}
+
+/* === Теги и жанры === */
+.tags-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.genre-tag,
+.lang-tag {
+  padding: 6px 14px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.genre-tag {
+  background: #dbeafe;
+  color: var(--accent);
+}
+
+.lang-tag {
+  background: #e6f7e6;
+  color: #16a34a;
+}
+
+/* === Сетка для контента игры === */
+.game-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* === Анимации === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.game-card {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* === Мобильная оптимизация (исправленная) === */
 @media (max-width: 768px) {
-  .roblox-header {
+  /* Хедер */
+  header {
     padding: 12px 16px;
   }
   
-  .header-nav {
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: block;
+  }
+  
+  .logo {
+    height: 32px;
+  }
+  
+  /* Герой секция */
+  .hero-section {
+    padding: 40px 16px 30px;
+  }
+  
+  .hero-section h2 {
+    font-size: 1.8em;
+  }
+  
+  .hero-section p {
+    font-size: 1em;
+  }
+  
+  /* Поиск */
+  .search-section {
+    padding: 0 16px;
+    margin-bottom: 24px;
+  }
+  
+  .search-container {
+    padding: 4px 4px 4px 16px;
+  }
+  
+  .filter-btn {
+    padding: 10px 16px;
+  }
+  
+  .filter-btn span:last-child {
     display: none;
   }
   
-  .logo-text {
-    font-size: 18px;
-  }
-  
-  .roblox-hero {
-    padding: 40px 16px;
-  }
-  
-  .roblox-hero h2 {
-    font-size: 2.2em;
-  }
-  
-  .roblox-hero p {
-    font-size: 1.1em;
-  }
-  
-  .roblox-stats {
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .roblox-search-section {
-    padding: 0 16px;
-    margin: -20px auto 30px;
-  }
-  
-  .roblox-search-container {
-    flex-wrap: wrap;
-    border-radius: 30px;
-    padding: 8px;
-  }
-  
-  .roblox-search-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-  
-  .roblox-filter-btn {
-    width: 100%;
-    justify-content: center;
-  }
-  
+  /* Фильтры */
   .filters-panel.visible {
     grid-template-columns: 1fr;
     padding: 16px;
+    gap: 16px;
   }
   
   .filter-actions {
@@ -660,60 +870,144 @@ body {
     width: 100%;
   }
   
-  .roblox-game-grid {
+  /* Список игр */
+  .game-list {
     grid-template-columns: 1fr;
     padding: 0 16px 32px;
     gap: 16px;
   }
   
-  .footer-bottom {
+  /* Страница игры - главное исправление */
+  .game-content {
+    grid-template-columns: 1fr !important; /* Одна колонка на мобильных */
+    gap: 24px;
+  }
+  
+  .game-info {
+    padding: 20px 16px;
+  }
+  
+  .game-title-section {
     flex-direction: column;
-    text-align: center;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .game-title-section h2 {
+    font-size: 1.8em;
+    text-align: left;
+  }
+  
+  .game-title-section .play-btn {
+    width: 100%;
+  }
+  
+  .game-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .game-meta-secondary {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .meta-item {
+    width: 100%;
+    text-align: left;
+  }
+  
+  /* Медиа секция */
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  
+  .quick-actions {
+    margin: 8px 0;
+  }
+  
+  .quick-actions .action-btn {
+    padding: 10px;
+  }
+  
+  /* Детали */
+  .game-details {
+    gap: 16px;
+  }
+  
+  .description-card,
+  .game-features,
+  .game-info-card {
+    padding: 20px;
+  }
+  
+  /* Галерея */
+  .gallery-container {
+    gap: 8px;
+  }
+  
+  .gallery-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  
+  .video-container iframe {
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+  
+  /* Футер */
+  .site-footer {
+    padding: 20px 16px;
+    margin-top: 40px;
   }
 }
 
 @media (max-width: 480px) {
-  .roblox-hero h2 {
-    font-size: 1.8em;
+  .game-title-section h2 {
+    font-size: 1.5em;
   }
   
-  .roblox-badge {
-    display: none;
+  .info-grid {
+    grid-template-columns: 1fr; /* Одна колонка для жанров и языков на очень маленьких */
   }
   
-  .roblox-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  .tags-container {
+    justify-content: flex-start;
   }
   
-  .footer-content {
+  .meta-item {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  
+  .quick-actions {
     grid-template-columns: 1fr;
-    text-align: center;
+  }
+  
+  .quick-actions .action-btn {
+    padding: 12px;
   }
 }
 
-/* Анимации */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+/* Touch оптимизации */
+@media (hover: none) and (pointer: coarse) {
+  .game-card:active {
+    transform: scale(0.98);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .action-btn:active,
+  .play-btn:active,
+  .gallery-nav:active {
+    opacity: 0.7;
+    transform: scale(0.96);
   }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.roblox-card-image {
-  animation: float 4s ease-in-out infinite;
-}
-
-.roblox-game-card:hover .roblox-card-image {
-  animation: none;
+  
+  .gallery-nav {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.9);
+  }
 }
