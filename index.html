@@ -3,77 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Akanchik Games</title>
+  <title>Akanchik Games - Roblox Style</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <img src="akanchik.png" alt="Akanchik Games" class="logo">
-    <!-- Кнопка удалена из хедера -->
+  <!-- Roblox Header -->
+  <header class="roblox-header">
+    <div class="header-left">
+      <div class="roblox-logo">
+        <img src="akanchik.png" alt="Akanchik Games">
+        <span class="logo-text">AKANCHIK</span>
+      </div>
+      <nav class="header-nav">
+        <a href="#" class="nav-item active">Главная</a>
+        <a href="#" class="nav-item">Игры</a>
+        <a href="#" class="nav-item">Топ</a>
+        <a href="#" class="nav-item">Новое</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="roblox-badge">
+        <span>⚡</span>
+        <span id="games-count">0</span>
+      </div>
+      <div class="roblox-avatar">
+        <span>👤</span>
+      </div>
+    </div>
   </header>
 
   <main>
-    <div class="hero-section">
-      <h2>Добро пожаловать в мир игр!</h2>
-      <p>Откройте для себя увлекательные игры, созданные независимыми разработчиками</p>
+    <!-- Roblox Hero -->
+    <div class="roblox-hero">
+      <div class="roblox-hero-content">
+        <h2>ДОБРО ПОЖАЛОВАТЬ В МИР ИГР!</h2>
+        <p>Откройте для себя увлекательные игры от независимых разработчиков</p>
+        <div class="roblox-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="games-stat">0</span>
+            <span class="stat-label">Игр</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">Онлайн</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100+</span>
+            <span class="stat-label">Игроков</span>
+          </div>
+        </div>
+      </div>
     </div>
     
-    <!-- Секция поиска -->
-    <div class="search-section">
-      <div class="search-container">
-        <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="search-input" placeholder="Поиск игр по названию, жанру или тегам...">
-        <button class="search-clear" id="search-clear">✕</button>
-        <button class="filter-btn" id="filter-toggle">
-          <span>⚙️</span> <span>Фильтры</span>
+    <!-- Roblox Search -->
+    <div class="roblox-search-section">
+      <div class="roblox-search-container">
+        <div class="roblox-search-icon">🔍</div>
+        <input type="text" class="roblox-search-input" id="search-input" placeholder="Поиск игр...">
+        <button class="roblox-filter-btn" id="filter-toggle">
+          <span>⚙️</span> Фильтры
         </button>
       </div>
       
-      <!-- Панель фильтров -->
+      <!-- Фильтры -->
       <div class="filters-panel" id="filters-panel">
         <div class="filter-group">
           <h4>Жанры</h4>
           <div class="filter-options" id="genre-filters"></div>
         </div>
-        
         <div class="filter-group">
           <h4>Сложность</h4>
           <div class="filter-options" id="difficulty-filters"></div>
         </div>
-        
         <div class="filter-group">
           <h4>Язык</h4>
           <div class="filter-options" id="language-filters"></div>
         </div>
-        
         <div class="filter-actions">
           <button class="reset-filters" id="reset-filters">Сбросить</button>
           <button class="apply-filters" id="apply-filters">Применить</button>
         </div>
       </div>
-      
-      <div class="search-stats" id="search-stats">
-        Найдено игр: <span id="search-count">0</span>
-      </div>
     </div>
     
-    <div id="game-list" class="game-list"></div>
+    <!-- Roblox Game Grid -->
+    <div id="game-list" class="roblox-game-grid"></div>
     
+    <!-- Empty State -->
     <div class="empty-state" id="empty-state" style="display: none;">
-      <h3>Пока нет игр</h3>
+      <h3>🎮 Пока нет игр</h3>
       <p>Будьте первым, кто добавит свою игру!</p>
-      <!-- Кнопка здесь остаётся для пустого состояния -->
     </div>
   </main>
 
-  <!-- Футер с кнопкой добавить игру -->
-  <footer class="site-footer">
+  <!-- Roblox Footer -->
+  <footer class="roblox-footer">
     <div class="footer-content">
+      <div class="footer-section">
+        <h4>Akanchik Games</h4>
+        <ul>
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Правила</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Игры</h4>
+        <ul>
+          <li><a href="#">Популярное</a></li>
+          <li><a href="#">Новинки</a></li>
+          <li><a href="#">Скоро</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Сообщество</h4>
+        <ul>
+          <li><a href="#">Форум</a></li>
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">Telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
       <button class="footer-add-game" onclick="window.open('https://forms.gle/Ws5PiZebbpYAbHGg7', '_blank')">
         ➕ Добавить игру
       </button>
       <div class="copyright">
-        Akanchik Games © 2026
+        Akanchik Games © 2026 | Все права защищены
       </div>
     </div>
   </footer>
