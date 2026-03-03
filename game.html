@@ -7,22 +7,29 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <a href="index.html" class="back-link">← На главную</a>
-  <img src="akanchik.png" alt="Akanchik Games" class="logo">
-  <button class="add-game-btn" onclick="window.open('https://forms.gle/Ws5PiZebbpYAbHGg7', '_blank')">
-    <span>➕</span> Добавить игру
-  </button>
-</header>
+  <header>
+    <a href="index.html" class="back-link">← На главную</a>
+    <img src="akanchik.png" alt="Akanchik Games" class="logo">
+    <button class="add-game-btn" onclick="window.open('https://forms.gle/Ws5PiZebbpYAbHGg7', '_blank')">
+      <span>➕</span> Добавить игру
+    </button>
+  </header>
 
   <main class="game-info">
     <div class="game-header">
-      <h2 id="game-title"></h2>
+      <div class="game-title-section">
+        <h2 id="game-title"></h2>
+        <button id="play-button" class="play-btn">
+          <span>🎮</span> Играть
+        </button>
+      </div>
+      
       <div class="game-meta">
         <span class="game-rating" id="game-rating"></span>
-        <span class="game-category" id="game-category"></span>
         <span class="game-author" id="game-author"></span>
+        <span class="game-category" id="game-category"></span>
       </div>
+      
       <div class="game-meta-secondary">
         <span class="meta-item" id="game-release"></span>
         <span class="meta-item" id="game-duration"></span>
@@ -31,20 +38,33 @@
     </div>
     
     <div class="game-content">
+      <!-- Левая колонка - Медиа -->
       <div class="game-media-section">
         <div id="game-media" class="game-media"></div>
         
-        <div class="game-info-card">
-          <h3>🏷️ Жанры</h3>
-          <div class="tags-container" id="game-genre"></div>
+        <div class="quick-actions">
+          <button class="action-btn" onclick="shareGame()">
+            <span>📤</span> Поделиться
+          </button>
+          <button class="action-btn" onclick="addToFavorites()">
+            <span>❤️</span> В избранное
+          </button>
         </div>
         
-        <div class="game-info-card">
-          <h3>🔤 Языки</h3>
-          <div class="tags-container" id="game-language"></div>
+        <div class="info-grid">
+          <div class="game-info-card compact">
+            <h3>🏷️ Жанры</h3>
+            <div class="tags-container" id="game-genre"></div>
+          </div>
+          
+          <div class="game-info-card compact">
+            <h3>🔤 Языки</h3>
+            <div class="tags-container" id="game-language"></div>
+          </div>
         </div>
       </div>
       
+      <!-- Правая колонка - Детали -->
       <div class="game-details">
         <div class="description-card">
           <h3>📖 Описание</h3>
@@ -52,7 +72,7 @@
         </div>
         
         <div class="game-features">
-          <h3>🎮 Особенности игры</h3>
+          <h3>🎮 Особенности</h3>
           <ul id="game-features-list"></ul>
         </div>
         
@@ -64,15 +84,6 @@
         <div class="game-info-card">
           <h3>🏷️ Теги</h3>
           <div class="tags-container" id="game-tags"></div>
-        </div>
-        
-        <button id="play-button" class="play-btn">
-          🎮 Играть сейчас
-        </button>
-        
-        <div class="game-actions">
-          <button class="action-btn" onclick="shareGame()">📤 Поделиться</button>
-          <button class="action-btn" onclick="addToFavorites()">❤️ В избранное</button>
         </div>
       </div>
     </div>
