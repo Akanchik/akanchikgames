@@ -2,17 +2,15 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Akanchik Games</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <img src="akanchik.png" alt="Akanchik Games" class="logo">
-  <button class="add-game-btn" onclick="window.open('https://forms.gle/Ws5PiZebbpYAbHGg7', '_blank')">
-    <span>➕</span> Добавить игру
-  </button>
-</header>
+  <header>
+    <img src="akanchik.png" alt="Akanchik Games" class="logo">
+    <!-- Кнопка удалена из хедера -->
+  </header>
 
   <main>
     <div class="hero-section">
@@ -20,8 +18,43 @@
       <p>Откройте для себя увлекательные игры, созданные независимыми разработчиками</p>
     </div>
     
-    <div class="games-counter">
-      <span>Доступно игр: <strong id="games-count">0</strong></span>
+    <!-- Секция поиска -->
+    <div class="search-section">
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search-input" placeholder="Поиск игр по названию, жанру или тегам...">
+        <button class="search-clear" id="search-clear">✕</button>
+        <button class="filter-btn" id="filter-toggle">
+          <span>⚙️</span> <span>Фильтры</span>
+        </button>
+      </div>
+      
+      <!-- Панель фильтров -->
+      <div class="filters-panel" id="filters-panel">
+        <div class="filter-group">
+          <h4>Жанры</h4>
+          <div class="filter-options" id="genre-filters"></div>
+        </div>
+        
+        <div class="filter-group">
+          <h4>Сложность</h4>
+          <div class="filter-options" id="difficulty-filters"></div>
+        </div>
+        
+        <div class="filter-group">
+          <h4>Язык</h4>
+          <div class="filter-options" id="language-filters"></div>
+        </div>
+        
+        <div class="filter-actions">
+          <button class="reset-filters" id="reset-filters">Сбросить</button>
+          <button class="apply-filters" id="apply-filters">Применить</button>
+        </div>
+      </div>
+      
+      <div class="search-stats" id="search-stats">
+        Найдено игр: <span id="search-count">0</span>
+      </div>
     </div>
     
     <div id="game-list" class="game-list"></div>
@@ -29,11 +62,21 @@
     <div class="empty-state" id="empty-state" style="display: none;">
       <h3>Пока нет игр</h3>
       <p>Будьте первым, кто добавит свою игру!</p>
-      <button class="add-game-btn" onclick="window.open('https://forms.gle/ВАША_ССЫЛКА_НА_ФОРМУ', '_blank')">
-        ➕ Добавить игру
-      </button>
+      <!-- Кнопка здесь остаётся для пустого состояния -->
     </div>
   </main>
+
+  <!-- Футер с кнопкой добавить игру -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <button class="footer-add-game" onclick="window.open('https://forms.gle/Ws5PiZebbpYAbHGg7', '_blank')">
+        ➕ Добавить игру
+      </button>
+      <div class="copyright">
+        Akanchik Games © 2026
+      </div>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
